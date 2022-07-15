@@ -5,7 +5,8 @@ import os
 
 
 import database
-from model import Lyrics
+from database import db
+from model import Lyric
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
