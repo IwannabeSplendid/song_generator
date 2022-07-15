@@ -9,7 +9,7 @@ def generate_lyrics(song_name, api_token):
             "top_k": 5,
             "top_p": 1,
             "do_sample": True,
-            "max_length": 400,
+            "max_length": 20, #400
             "temperature": 0.8,
             "repetition_penalty": 1.0,
             "return_full_text": False,
