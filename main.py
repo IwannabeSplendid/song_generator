@@ -6,6 +6,8 @@ from generator import generate_lyrics
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db = SQLAlchemy(app)
 
@@ -34,10 +36,10 @@ def lyrics(song_title):
     if request.method == 'POST':
         return redirect(f'/{request.form.get("song_title")}')
     else:
-        lyrics = generate_lyrics(song_title, 'hf_cHnyvYKrzAfrPouCcRMJspmjWSBhJdfLk') #os.getenv('Song_token')
+        lyrics = generate_lyrics(song_title,  os.getenv('Song_token'))
         
-        # db.session.add(Lyric(song_title, lyrics))
-        # db.session.commit()
+        db.session.add(Lyric(song_title, lyrics))
+        db.session.commit()
 
         return render_template('lyrics.html', song_title = song_title, lyrics = lyrics)
 
