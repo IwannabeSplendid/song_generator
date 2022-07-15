@@ -8,7 +8,12 @@ import database
 from database import db
 from model import Lyric
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URL')
+
+uri = os.getenv("DATABASE_URL")  
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+    
+app.config['SQLALCHEMY_DATABASE_URI']= uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 database.init_app(app)
 
@@ -30,7 +35,7 @@ def lyrics(song_title):
     if request.method == 'POST':
         return redirect(f'/{request.form.get("song_title")}')
     else:
-        lyrics = generate_lyrics(song_title,  os.getenv('Song_token'))
+        lyrics = generate_lyrics(song_title,  os..environ.get('Song_token'))
         
         db.session.add(Lyric(song_title, lyrics))
         db.session.commit()
