@@ -38,8 +38,8 @@ def lyrics(song_title):
     else:
         lyrics = generate_lyrics(song_title,  os.getenv('Song_token'))
         
-        db.session.add(Lyric(song_title, lyrics))
-        db.session.commit()
+        # db.session.add(Lyric(song_title, lyrics))
+        # db.session.commit()
 
         return render_template('lyrics.html', song_title = song_title, lyrics = lyrics)
 
