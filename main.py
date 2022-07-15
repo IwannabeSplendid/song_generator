@@ -5,10 +5,12 @@ import os
 
 
 import database
+from model import Lyrics
 app = Flask(__name__)
-database.init_app(app)
 app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+database.init_app(app)
+
 
 
 import commands
