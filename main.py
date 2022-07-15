@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from generator import generate_lyrics
 
+import click
+from flask.cli import with_appcontext
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URL')
@@ -10,6 +12,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 db = SQLAlchemy(app)
+
+@click.command(name='create_tables')
+@with_appcontext
+def create_tables():
+    db.create_all()
 
 class Lyric(db.Model):
     id = db.Column(db.Integer, primary_key =True)
