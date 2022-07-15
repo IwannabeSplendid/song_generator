@@ -35,7 +35,7 @@ def lyrics(song_title):
     if request.method == 'POST':
         return redirect(f'/{request.form.get("song_title")}')
     else:
-        lyrics = generate_lyrics(song_title,  os..environ.get('Song_token'))
+        lyrics = generate_lyrics(song_title,  os.environ.get('Song_token'))
         
         db.session.add(Lyric(song_title, lyrics))
         db.session.commit()
