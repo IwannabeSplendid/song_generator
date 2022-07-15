@@ -1,34 +1,18 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-import os
 from generator import generate_lyrics
+import os
 
-import click
-from flask.cli import with_appcontext
 
+import database
 app = Flask(__name__)
+database.init_app(app)
 app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
-db = SQLAlchemy(app)
-
-@click.command(name='create_tables')
-@with_appcontext
-def create_tables():
-    db.create_all()
-
-class Lyric(db.Model):
-    id = db.Column(db.Integer, primary_key =True)
-    title = db.Column(db.String(40), nullable = False)
-    song = db.Column(db.Text)
-
-    def __init__(self, title, song):
-        self.title = title
-        self.song = song
-
-    def __repr__(self):
-        return self.title + ": "+ self.song
+import commands
+commands.init_app(app)
 
 
 @app.route('/', methods = ['POST', 'GET'])
